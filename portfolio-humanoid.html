@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Arduino Bipedal Robot</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/newlogo.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- Custom Styling -->
+  <style>
+    /* Make slider images fill column */
+    .portfolio-details-slider .swiper-slide img {
+      width: 80%;
+      max-height: 600px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    /* Space for text */
+    .portfolio-text {
+      padding-left: 20px;
+    }
+
+    .portfolio-info {
+      margin-bottom: 1.5rem;
+    }
+
+    .portfolio-description p {
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    .portfolio-description h4 {
+      margin-top: 1.4rem;
+      margin-bottom: 0.6rem;
+      font-weight: 600;
+    }
+
+    /* Headings styled like FRC page */
+    .portfolio-description h4 {
+      margin-top: 1.4rem;
+      margin-bottom: 0.6rem;
+      font-weight: 600;
+      color: #0d6efd;  /* same blue as FRC headings */
+      font-family: 'Roboto', sans-serif;
+    }
+
+    /* Paragraph text */
+    .portfolio-description p {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      font-family: 'Roboto', sans-serif;
+      color: #000; 
+    }
+
+    /* Title block matches FRC styling */
+    .portfolio-info h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      font-family: 'Roboto', sans-serif;
+    }
+  </style>
+</head>
+
+<body class="portfolio-details humanoid">
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header dark-background d-flex flex-column">
+    <i class="header-toggle d-xl-none bi bi-list"></i>
+    <div class="profile-img">
+      <img src="assets/img/IMG_0094 (1).JPEG" alt="" class="img-fluid rounded-circle">
+    </div>
+    <a href="index.html" class="logo d-flex align-items-center justify-content-center">
+      <h1 class="sitename">Parth Dhingra</h1>
+    </a>
+    <div class="social-links text-center">
+      <a href="#" class="google-plus"><i class="bi bi-skype"></i></a>
+      <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+    </div>
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="index.html#hero"><i class="bi bi-house navicon"></i>Home</a></li>
+        <li><a href="index.html#about"><i class="bi bi-person navicon"></i> About</a></li>
+        <li><a href="index.html#portfolio"><i class="bi bi-images navicon"></i> Portfolio</a></li>
+        <li><a href="index.html#resume"><i class="bi bi-file-earmark-text navicon"></i> Resume</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title dark-background">
+      <div class="container d-lg-flex justify-content-between align-items-center">
+        <h1 class="mb-2 mb-lg-0">Arduino Bipedal Robot</h1>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li class="current">Arduino Bipedal Robot</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <!-- End Page Title -->
+
+    <!-- Portfolio Details Section -->
+    <section id="portfolio-details" class="portfolio-details section pt-3">
+      <div class="container">
+        <div class="row gy-4">
+
+          <!-- Left: Slider -->
+          <div class="col-lg-6">
+            <div class="swiper portfolio-details-slider">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <img src="assets/img/Robot/IMG_8853.JPEG" alt="Bipedal Robot" class="img-fluid">
+                </div>
+                <div class="swiper-slide">
+                  <img src="assets/img/Robot/cad.jpg" alt="CAD" class="img-fluid">
+                </div>
+                <div class="swiper-slide">
+                  <img src="assets/img/Robot/IMG_8844.JPEG" alt="Bipedal Robot" class="img-fluid">
+                </div>
+                <div class="swiper-slide">
+                  <img src="assets/img/Robot/IMG_8854.JPEG" alt="Electronics" class="img-fluid">
+                </div>
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+
+          <!-- Right: Text -->
+          <div class="col-lg-6 portfolio-text">
+            <div class="portfolio-info mb-3">
+              <h2>Arduino Bipedal Robot</h2>
+              <ul>
+                <li><strong>Category</strong>: Engineering & Fabrication</li>
+                <li><strong>Date</strong>: 2024</li>
+              </ul>
+            </div>
+            <div class="portfolio-description">
+              <h4>What?</h4>
+              <p>I designed and built a simple bipedal robot using servo motors and an Arduino motor controller. The goal was to learn servo control using an Arduino and make a basic robot capable of walking.</p>
+
+              <h4>How?</h4>
+              <p>I designed the robot using OnShape CAD and fabricated the parts using a 3D printer. Each joint was driven by MG996R servos connected to a PCA9685 servo driver, powered by AA batteries. Using the Arduino IDE, I programmed the servos to move in sequence, enabling the robot to balance and walk.</p>
+
+              <h4>Results</h4>
+              <p>The robot was able to stand upright and take a few steps. Through this project, I learned how to integrate Arduino, servos, and the Arduino IDE to create a functional system. It also gave me hands-on experience combining mechanical design with programming to achieve real-world motion.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <!-- /Portfolio Details Section -->
+
+  </main>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+  </a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/typed.js/typed.umd.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Swiper Init -->
+  <script>
+    new Swiper('.portfolio-details-slider', {
+      loop: true,
+      speed: 600,
+      autoplay: { delay: 4000 },
+      pagination: { el: '.swiper-pagination', clickable: true }
+    });
+  </script>
+
+</body>
+</html>
