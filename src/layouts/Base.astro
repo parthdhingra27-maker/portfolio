@@ -1,0 +1,104 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+const currentYear = new Date().getFullYear();
+const currentPath = Astro.url.pathname;
+const isHomePage = currentPath === '/';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <title>{title}</title>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      
+      * {
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* Page transition styles */
+      @view-transition {
+        navigation: auto;
+      }
+
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation-duration: 0.3s;
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      ::view-transition-old(root) {
+        animation-name: fade-out;
+      }
+
+      ::view-transition-new(root) {
+        animation-name: fade-in;
+      }
+
+      @keyframes fade-out {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0;
+        }
+      }
+
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Fallback for browsers without view transitions */
+      @supports not (view-transition-name: none) {
+        body {
+          transition: opacity 0.3s ease-in-out;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-[#FAFAFA] font-sans antialiased scroll-smooth">
+    <nav class="flex justify-between items-center px-4 sm:px-6 py-4 sm:py-5 w-full relative border-b border-gray-200">
+      <a href="/" class="text-xl sm:text-2xl font-bold text-[#654321] hover:opacity-70 transition-all duration-300 ease-in-out">
+        Parth Dhingra
+      </a>
+      <div class="hidden md:flex gap-10 absolute left-1/2 transform -translate-x-1/2">
+        {!isHomePage && (
+          <a href="/" class="text-[#1A1A1A] hover:opacity-70 transition-all duration-300 ease-in-out">Home</a>
+        )}
+        <a href="/projects" class="text-[#1A1A1A] hover:opacity-70 transition-all duration-300 ease-in-out">Projects</a>
+        <a href="/contact" class="text-[#1A1A1A] hover:opacity-70 transition-all duration-300 ease-in-out">Contact</a>
+      </div>
+      <div class="md:hidden flex gap-4 sm:gap-6 text-sm sm:text-base">
+        {!isHomePage && (
+          <a href="/" class="text-[#1A1A1A] hover:opacity-70 transition-all duration-300 ease-in-out">Home</a>
+        )}
+        <a href="/projects" class="text-[#1A1A1A] hover:opacity-70 transition-all duration-300 ease-in-out">Projects</a>
+        <a href="/contact" class="text-[#1A1A1A] hover:opacity-70 transition-all duration-300 ease-in-out">Contact</a>
+      </div>
+    </nav>
+    <main>
+      <slot />
+    </main>
+    <footer class="w-full px-6 py-8 text-center border-t border-gray-200 mt-12">
+      <p class="text-sm text-gray-500">
+        © {currentYear} Parth Dhingra. All rights reserved.
+      </p>
+    </footer>
+  </body>
+</html>

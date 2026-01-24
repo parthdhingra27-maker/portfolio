@@ -1,0 +1,267 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+
+const publishedDate = project.data.publishedDate 
+  ? new Date(project.data.publishedDate).toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    })
+  : null;
+---
+
+<Base title={`${project.data.title} - Parth Dhingra`}>
+  <article class="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+    <!-- Back Link -->
+    <a 
+      href="/projects" 
+      class="inline-flex items-center gap-2 text-[#4B5563]text-gray-400 hover:text-[#1A1A1A]hover:text-gray-200 transition-colors mb-8 text-sm sm:text-base"
+    >
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"/>
+        <polyline points="12 19 5 12 12 5"/>
+      </svg>
+      Back to project list
+    </a>
+
+    <!-- Project Title -->
+    <h1 class="text-4xl sm:text-5xl font-bold mb-4 text-[#1A1A1A]">
+      {project.data.title}
+    </h1>
+
+    <!-- Metadata -->
+    {publishedDate && (
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-8 text-sm sm:text-base text-[#4B5563]">
+        <span>Published on: {publishedDate}</span>
+        {project.data.readTime && (
+          <span class="flex items-center gap-1.5">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            {project.data.readTime}
+          </span>
+        )}
+      </div>
+    )}
+
+    <!-- Project Image -->
+    {project.data.image && (
+      <div class="mb-8">
+        <img 
+          src={project.data.image} 
+          alt={project.data.title}
+          class="w-full rounded-xl object-cover"
+        />
+      </div>
+    )}
+
+    <!-- Tags -->
+    {project.data.tags && project.data.tags.length > 0 && (
+      <div class="flex flex-wrap gap-2 mb-6">
+        {project.data.tags.map((tag) => (
+          <span class="px-4 py-1.5 bg-[#D97706] text-white text-sm rounded-full font-medium">
+            {tag}
+          </span>
+        ))}
+      </div>
+    )}
+
+    <!-- GitHub and Demo Video Buttons -->
+    {((project.data.github && project.data.github.trim() !== '') || (project.data.demoVideo && project.data.demoVideo.trim() !== '')) && (
+      <div class="flex flex-wrap gap-3 mb-10">
+        {project.data.github && project.data.github.trim() !== '' && (
+          <a 
+            href={project.data.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 bg-[#1A1A1A] text-white px-4 py-2 rounded-xl hover:opacity-90 transition-all duration-300 ease-in-out transform hover:scale-105 text-sm"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+            View on GitHub
+          </a>
+        )}
+        {project.data.demoVideo && project.data.demoVideo.trim() !== '' && (
+          <a 
+            href={project.data.demoVideo}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 bg-[#FF0000] text-white px-4 py-2 rounded-xl hover:opacity-90 transition-all duration-300 ease-in-out transform hover:scale-105 text-sm"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+            View Demo Video
+          </a>
+        )}
+      </div>
+    )}
+
+    <!-- Additional Section -->
+    {project.data.sectionTitle && project.data.sectionContent && (
+      <div class="mb-10">
+        <h3 class="text-2xl sm:text-3xl font-bold mb-4 text-[#1A1A1A]">
+          {project.data.sectionTitle}
+        </h3>
+        <p class="text-lg leading-relaxed text-[#1A1A1A]">
+          {project.data.sectionContent}
+        </p>
+      </div>
+    )}
+
+    <!-- Second Additional Section -->
+    {project.data.sectionTitle2 && project.data.sectionContent2 && (
+      <div class="mb-10">
+        <h3 class="text-2xl sm:text-3xl font-bold mb-4 text-[#1A1A1A]">
+          {project.data.sectionTitle2}
+        </h3>
+        <p class="text-lg leading-relaxed text-[#1A1A1A]">
+          {project.data.sectionContent2}
+        </p>
+      </div>
+    )}
+
+    <!-- Project Content -->
+    <div class="prose prose-lg max-w-none">
+      <Content />
+    </div>
+
+    <!-- Additional Images -->
+    {project.data.image2 && (
+      <div class="mb-8 mt-10">
+        <img 
+          src={project.data.image2} 
+          alt={project.data.title}
+          class="w-full rounded-xl object-cover"
+        />
+      </div>
+    )}
+    {project.data.image3 && (
+      <div class="mb-8">
+        <img 
+          src={project.data.image3} 
+          alt={project.data.title}
+          class="w-full rounded-xl object-cover"
+        />
+      </div>
+    )}
+    {project.data.image4 && (
+      <div class="mb-8">
+        <img 
+          src={project.data.image4} 
+          alt={project.data.title}
+          class="w-full rounded-xl object-cover"
+        />
+      </div>
+    )}
+  </article>
+
+  <style>
+    /* Project content styling */
+    .prose {
+      color: #1A1A1A;
+      line-height: 1.75;
+    }
+
+    .prose h2 {
+      font-size: 1.875rem;
+      font-weight: 700;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      color: #1A1A1A;
+      line-height: 1.3;
+    }
+
+    .prose h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+      color: #1A1A1A;
+      line-height: 1.4;
+    }
+
+    .prose p {
+      font-size: 1.125rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.75;
+      color: #1A1A1A;
+    }
+
+    .prose strong {
+      font-weight: 700;
+      color: #1A1A1A;
+    }
+
+    .prose ul,
+    .prose ol {
+      margin-bottom: 1.5rem;
+      padding-left: 1.5rem;
+    }
+
+    .prose li {
+      margin-bottom: 0.5rem;
+      line-height: 1.75;
+      font-size: 1.125rem;
+    }
+
+    .prose a {
+      color: #654321;
+      text-decoration: underline;
+      transition: opacity 0.2s;
+    }
+
+    .prose a:hover {
+      opacity: 0.8;
+    }
+
+    .prose code {
+      background: #F3F4F6;
+      padding: 0.2em 0.4em;
+      border-radius: 4px;
+      font-size: 0.9em;
+      font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Consolas', monospace;
+    }
+
+    .prose pre {
+      background: #F3F4F6;
+      padding: 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+    }
+
+    .prose pre code {
+      background: none;
+      padding: 0;
+    }
+
+    .prose blockquote {
+      border-left: 3px solid #D97706;
+      padding-left: 1.25rem;
+      margin-left: 0;
+      margin-bottom: 1.5rem;
+      color: #4B5563;
+      font-style: italic;
+    }
+
+    .prose img {
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</Base>
