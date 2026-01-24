@@ -1,4 +1,6 @@
 ---
+import { ClientRouter } from 'astro:transitions';
+
 interface Props {
   title: string;
 }
@@ -17,6 +19,7 @@ const isHomePage = currentPath === '/';
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <ClientRouter />
     <title>{title}</title>
     <style>
       html {
@@ -27,9 +30,32 @@ const isHomePage = currentPath === '/';
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
       }
 
-      /* Page transition styles using CSS only */
-      body {
-        animation: fade-in 0.3s ease-in-out;
+      /* Page transition styles */
+      @view-transition {
+        navigation: auto;
+      }
+
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation-duration: 0.3s;
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      ::view-transition-old(root) {
+        animation-name: fade-out;
+      }
+
+      ::view-transition-new(root) {
+        animation-name: fade-in;
+      }
+
+      @keyframes fade-out {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0;
+        }
       }
 
       @keyframes fade-in {
@@ -38,6 +64,13 @@ const isHomePage = currentPath === '/';
         }
         to {
           opacity: 1;
+        }
+      }
+
+      /* Fallback for browsers without view transitions */
+      @supports not (view-transition-name: none) {
+        body {
+          transition: opacity 0.3s ease-in-out;
         }
       }
     </style>
