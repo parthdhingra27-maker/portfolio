@@ -45,20 +45,59 @@ const publishedDate = project.data.publishedDate
     {publishedDate && (
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-8 text-sm sm:text-base text-[#4B5563]">
         <span>Published on: {publishedDate}</span>
-        {project.data.readTime && (
-          <span class="flex items-center gap-1.5">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10"/>
-              <polyline points="12 6 12 12 16 14"/>
-            </svg>
-            {project.data.readTime}
-          </span>
-        )}
       </div>
     )}
 
-    <!-- Project Image -->
-    {project.data.image && (
+    <!-- Project Image Carousel -->
+    {project.data.carouselImages && project.data.carouselImages.length > 0 ? (
+      <div class="mb-8 relative">
+        <div class="carousel-container relative w-full rounded-xl overflow-hidden bg-gray-100">
+          {project.data.carouselImages.map((img, index) => (
+            <div 
+              class={`carousel-slide ${index === 0 ? 'active' : 'hidden'}`}
+              data-slide={index}
+            >
+              <img 
+                src={img} 
+                alt={`${project.data.title} - Image ${index + 1}`}
+                class="w-full h-auto rounded-xl object-cover"
+              />
+            </div>
+          ))}
+          
+          {project.data.carouselImages.length > 1 && (
+            <>
+              <button 
+                class="carousel-prev absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-lg transition-all duration-300 z-10"
+                aria-label="Previous image"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 18 9 12 15 6"/>
+                </svg>
+              </button>
+              <button 
+                class="carousel-next absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-lg transition-all duration-300 z-10"
+                aria-label="Next image"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"/>
+                </svg>
+              </button>
+              
+              <div class="carousel-dots absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                {project.data.carouselImages.map((_, index) => (
+                  <button 
+                    class={`carousel-dot w-2 h-2 rounded-full transition-all duration-300 ${index === 0 ? 'bg-white' : 'bg-white/50'}`}
+                    data-dot={index}
+                    aria-label={`Go to image ${index + 1}`}
+                  ></button>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    ) : project.data.image ? (
       <div class="mb-8">
         <img 
           src={project.data.image} 
@@ -66,7 +105,7 @@ const publishedDate = project.data.publishedDate
           class="w-full rounded-xl object-cover"
         />
       </div>
-    )}
+    ) : null}
 
     <!-- Tags -->
     {project.data.tags && project.data.tags.length > 0 && (
@@ -111,32 +150,20 @@ const publishedDate = project.data.publishedDate
       </div>
     )}
 
-    <!-- Additional Section -->
+    <!-- Overview Section -->
     {project.data.sectionTitle && project.data.sectionContent && (
-      <div class="mb-10">
-        <h3 class="text-2xl sm:text-3xl font-bold mb-4 text-[#1A1A1A]">
+      <div class="project-content">
+        <h2 style="font-size: 2.5rem; font-weight: 900; margin-top: 2.5rem; margin-bottom: 2rem; line-height: 1.2; letter-spacing: -0.025em; color: #1A1A1A; font-family: 'Inter', system-ui, sans-serif;">
           {project.data.sectionTitle}
-        </h3>
-        <p class="text-lg leading-relaxed text-[#1A1A1A]">
+        </h2>
+        <p style="font-size: 1.125rem; margin-bottom: 2.5rem; line-height: 1.75; color: #1A1A1A;">
           {project.data.sectionContent}
         </p>
       </div>
     )}
 
-    <!-- Second Additional Section -->
-    {project.data.sectionTitle2 && project.data.sectionContent2 && (
-      <div class="mb-10">
-        <h3 class="text-2xl sm:text-3xl font-bold mb-4 text-[#1A1A1A]">
-          {project.data.sectionTitle2}
-        </h3>
-        <p class="text-lg leading-relaxed text-[#1A1A1A]">
-          {project.data.sectionContent2}
-        </p>
-      </div>
-    )}
-
-    <!-- Project Content -->
-    <div class="prose prose-lg max-w-none">
+    <!-- Project Content (Markdown) -->
+    <div class="project-content max-w-none">
       <Content />
     </div>
 
@@ -172,64 +199,91 @@ const publishedDate = project.data.publishedDate
 
   <style>
     /* Project content styling */
-    .prose {
+    .project-content {
       color: #1A1A1A;
-      line-height: 1.75;
-    }
-
-    .prose h2 {
-      font-size: 1.875rem;
-      font-weight: 700;
-      margin-top: 2.5rem;
-      margin-bottom: 1rem;
-      color: #1A1A1A;
-      line-height: 1.3;
-    }
-
-    .prose h3 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-top: 2rem;
-      margin-bottom: 0.75rem;
-      color: #1A1A1A;
-      line-height: 1.4;
-    }
-
-    .prose p {
-      font-size: 1.125rem;
-      margin-bottom: 1.5rem;
-      line-height: 1.75;
-      color: #1A1A1A;
-    }
-
-    .prose strong {
-      font-weight: 700;
-      color: #1A1A1A;
-    }
-
-    .prose ul,
-    .prose ol {
-      margin-bottom: 1.5rem;
-      padding-left: 1.5rem;
-    }
-
-    .prose li {
-      margin-bottom: 0.5rem;
       line-height: 1.75;
       font-size: 1.125rem;
     }
 
-    .prose a {
+    /* Target ALL h2 headings in article - catch everything */
+    article h2,
+    article .project-content h2,
+    .project-content h2,
+    article * h2 {
+      font-size: 2.5rem !important;
+      font-weight: 900 !important;
+      margin-top: 4rem !important;
+      margin-bottom: 2rem !important;
+      color: #1A1A1A !important;
+      line-height: 1.2 !important;
+      letter-spacing: -0.025em !important;
+      font-family: 'Inter', system-ui, sans-serif !important;
+    }
+
+    /* First h2 in the markdown content section (the one after Overview) */
+    article .project-content:last-of-type h2:first-of-type,
+    article .project-content:last-of-type > *:first-child h2:first-of-type {
+      margin-top: 2.5rem !important;
+    }
+
+    /* Target ALL h3 headings */
+    article h3,
+    article .project-content h3,
+    .project-content h3,
+    article .project-content :is(h3),
+    .project-content :is(h3),
+    article :is(h3) {
+      font-size: 1.75rem !important;
+      font-weight: 800 !important;
+      margin-top: 3rem !important;
+      margin-bottom: 1rem !important;
+      color: #1A1A1A !important;
+      line-height: 1.3 !important;
+      letter-spacing: -0.01em !important;
+    }
+
+    .project-content p,
+    article .project-content p {
+      font-size: 1.125rem !important;
+      margin-bottom: 2.5rem !important;
+      line-height: 1.75 !important;
+      color: #1A1A1A !important;
+    }
+
+    .project-content strong {
+      font-weight: 700;
+      color: #1A1A1A;
+    }
+
+    .project-content ul,
+    .project-content ol,
+    article .project-content ul,
+    article .project-content ol {
+      margin-bottom: 3rem !important;
+      margin-top: 1.5rem !important;
+      padding-left: 1.75rem !important;
+    }
+
+    .project-content li,
+    article .project-content li {
+      margin-bottom: 0.875rem !important;
+      line-height: 1.75 !important;
+      font-size: 1.125rem !important;
+      list-style-type: disc !important;
+      display: list-item !important;
+    }
+
+    .project-content a {
       color: #654321;
       text-decoration: underline;
       transition: opacity 0.2s;
     }
 
-    .prose a:hover {
+    .project-content a:hover {
       opacity: 0.8;
     }
 
-    .prose code {
+    .project-content code {
       background: #F3F4F6;
       padding: 0.2em 0.4em;
       border-radius: 4px;
@@ -237,7 +291,7 @@ const publishedDate = project.data.publishedDate
       font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Consolas', monospace;
     }
 
-    .prose pre {
+    .project-content pre {
       background: #F3F4F6;
       padding: 1.25rem;
       border-radius: 8px;
@@ -245,12 +299,12 @@ const publishedDate = project.data.publishedDate
       margin-bottom: 1.5rem;
     }
 
-    .prose pre code {
+    .project-content pre code {
       background: none;
       padding: 0;
     }
 
-    .prose blockquote {
+    .project-content blockquote {
       border-left: 3px solid #D97706;
       padding-left: 1.25rem;
       margin-left: 0;
@@ -259,9 +313,49 @@ const publishedDate = project.data.publishedDate
       font-style: italic;
     }
 
-    .prose img {
+    .project-content img {
       border-radius: 8px;
       margin-bottom: 1.5rem;
     }
   </style>
+
+  {project.data.carouselImages && project.data.carouselImages.length > 1 && (
+    <script is:inline>
+      (function() {
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const prevBtn = document.querySelector('.carousel-prev');
+        const nextBtn = document.querySelector('.carousel-next');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+          slides.forEach((slide, i) => {
+            slide.classList.toggle('hidden', i !== index);
+          });
+          dots.forEach((dot, i) => {
+            dot.classList.toggle('bg-white', i === index);
+            dot.classList.toggle('bg-white/50', i !== index);
+          });
+          currentSlide = index;
+        }
+
+        function nextSlide() {
+          const next = (currentSlide + 1) % slides.length;
+          showSlide(next);
+        }
+
+        function prevSlide() {
+          const prev = (currentSlide - 1 + slides.length) % slides.length;
+          showSlide(prev);
+        }
+
+        if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+        if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+        
+        dots.forEach((dot, index) => {
+          dot.addEventListener('click', () => showSlide(index));
+        });
+      })();
+    </script>
+  )}
 </Base>

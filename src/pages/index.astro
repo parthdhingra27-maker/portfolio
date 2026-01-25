@@ -3,7 +3,21 @@ import Base from "../layouts/Base.astro";
 import { getCollection } from "astro:content";
 
 const projects = (await getCollection("projects")).sort(
-  (a, b) => b.data.year - a.data.year
+  (a, b) => {
+    // Sort by custom order field if available, otherwise by publishedDate or year
+    if (a.data.order !== undefined && b.data.order !== undefined) {
+      return a.data.order - b.data.order;
+    }
+    if (a.data.order !== undefined) return -1; // Items with order come first
+    if (b.data.order !== undefined) return 1;
+    // Default: sort by publishedDate (most recent first), then by year
+    if (a.data.publishedDate && b.data.publishedDate) {
+      return new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime();
+    }
+    if (a.data.publishedDate) return -1; // Items with publishedDate come first
+    if (b.data.publishedDate) return 1;
+    return b.data.year - a.data.year;
+  }
 );
 ---
 
@@ -17,7 +31,7 @@ const projects = (await getCollection("projects")).sort(
       <p class="text-xl sm:text-2xl font-normal text-[#4B5563] mb-6">
         Mechanical Engineering Student @ George Mason University
       </p>
-      <p class="text-lg leading-relaxed text-[#1A1A1A] mb-8">
+      <p class="text-lg leading-relaxed text-[#4B5563] mb-8">
         Welcome to my portfolio! I love building useful robotic and electrical projects!
       </p>
       <div class="flex flex-col sm:flex-row gap-4">
@@ -72,7 +86,7 @@ const projects = (await getCollection("projects")).sort(
     <div class="text-center mb-6 sm:mb-8">
       <a 
         href="/projects" 
-        class="inline-flex items-center gap-2 text-[#654321] hover:underline transition-all duration-300 ease-in-out font-medium"
+        class="inline-flex items-center gap-2 text-[#4B5563] hover:underline transition-all duration-300 ease-in-out font-medium"
       >
         View All Projects
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -81,7 +95,7 @@ const projects = (await getCollection("projects")).sort(
         </svg>
       </a>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto">
       {projects.map((project) => {
         const publishedDate = project.data.publishedDate 
           ? new Date(project.data.publishedDate).toLocaleDateString('en-US', { 
@@ -100,14 +114,14 @@ const projects = (await getCollection("projects")).sort(
               <img 
                 src={project.data.image} 
                 alt={project.data.title}
-                class="w-full h-48 object-cover"
+                class="w-full h-64 object-cover"
               />
             ) : (
-              <div class="w-full h-48 bg-gray-100 flex items-center justify-center">
-                <span class="text-gray-400 text-sm">No image</span>
+              <div class="w-full h-64 bg-gray-100 flex items-center justify-center">
+                <span class="text-[#4B5563] text-sm">No image</span>
               </div>
             )}
-            <div class="p-6">
+            <div class="p-4">
               <h2 class="text-xl font-bold mb-3 text-[#1A1A1A] group-hover:text-[#654321] transition-colors">
                 {project.data.title}
               </h2>
@@ -115,15 +129,6 @@ const projects = (await getCollection("projects")).sort(
               {publishedDate && (
                 <div class="flex items-center gap-4 mb-3 text-sm text-[#4B5563]">
                   <span>Published on: {publishedDate}</span>
-                  {project.data.readTime && (
-                    <span class="flex items-center gap-1">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/>
-                        <polyline points="12 6 12 12 16 14"/>
-                      </svg>
-                      {project.data.readTime}
-                    </span>
-                  )}
                 </div>
               )}
               
@@ -136,7 +141,7 @@ const projects = (await getCollection("projects")).sort(
               {project.data.tags && project.data.tags.length > 0 && (
                 <div class="flex flex-wrap gap-2 mb-4">
                   {project.data.tags.map((tag) => (
-                    <span class="px-3 py-1 bg-[#654321] text-white text-xs rounded-full">
+                    <span class="px-3 py-1 bg-[#A67C52] text-white text-xs rounded-full">
                       {tag}
                     </span>
                   ))}

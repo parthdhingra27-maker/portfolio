@@ -1,7 +1,7 @@
 ---
 title: "Solder Fume Extractor"
 year: 2024
-description: "A compact, desktop-sized solder fume extractor with variable speed control and modern design for safe soldering work."
+description: "Designed and built a compact solder fume extractor with a custom PCB, variable speed control, and a 3D-printed enclosure."
 tags: ["Electronics", "3D Printing", "Hardware"]
 publishedDate: "2024-11-20"
 readTime: "4 min read"

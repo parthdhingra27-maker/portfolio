@@ -1,40 +1,54 @@
 ---
 title: "4-DOF Robot Arm"
 year: 2024
-description: "A precision-engineered 4-degree-of-freedom robotic arm designed for versatile automation and manipulation tasks."
+description: "Designed and built a 4-DOF robotic arm featuring custom motor-control PCBs, belt-driven joints, and a wireless web-based control interface."
 tags: ["Robotics", "CAD", "Mechanical Design"]
 publishedDate: "2024-12-15"
 readTime: "5 min read"
 image: "/4dof-robot-arm.png"
-github: ""
-demoVideo: ""
+carouselImages: ["/4dof-robot-arm.png"]
+github: "https://github.com/parthdhingra27-maker/RobotArm"
+demoVideo: "https://youtube.com/shorts/5vbvHmszKk0?feature=share"
 sectionTitle: "Overview"
-sectionContent: "This robotic arm project demonstrates advanced mechanical design principles and precision engineering. The arm consists of four main joints that provide comprehensive movement capabilities, allowing for complex manipulation tasks in industrial or research settings."
+sectionContent: "This project is a custom-designed 4-DOF robotic arm developed to explore low-cost actuation, mechanical transmission design, and integrated motor control. The system combines belt-driven joints, custom motor-control PCBs, and a wireless web-based control interface."
 ---
 
-A 4-DOF (Degrees of Freedom) robot arm designed and modeled using CAD software, featuring precise articulation and robust construction for various automation applications.
 
-## Overview
 
-This robotic arm project demonstrates advanced mechanical design principles and precision engineering. The arm consists of four main joints that provide comprehensive movement capabilities, allowing for complex manipulation tasks in industrial or research settings.
+## Key Features
 
-## Design Features
+- 4 degrees of freedom with belt-driven joints
+- Custom-designed motor control PCB
+- Wireless web-based control interface
+- Modular joint and link design
+- Designed entirely in CAD and prototyped in-house
 
-- **Base Joint (Waist):** Cylindrical base with secure mounting points and integrated control housing
-- **Shoulder Joint:** Light blue cylindrical section with gear housing for smooth rotational movement
-- **Elbow Joint:** Articulated arm segment with gear mechanisms for precise positioning
-- **End Effector Mount:** Forearm section with attachment points for various tools and grippers
+## Mechanical Design
 
-## Technical Specifications
+The arm uses belt-driven joints to achieve precise motion control while maintaining a low-cost design. Each joint is modular, allowing for easy replacement and future expansion. The base joint provides 360-degree rotation, while the shoulder, elbow, and wrist joints offer the remaining degrees of freedom. Load considerations were critical in the design, with each joint sized to handle the cumulative weight of distal links while maintaining smooth operation.
 
-- **Degrees of Freedom:** 4-DOF
-- **Construction:** Teal, light blue, and light grey components
-- **Mounting:** Secure base with multiple bolt points
-- **Articulation:** Gear-driven joints for smooth, precise movement
+The modular design philosophy extends to the link structure, where standardized mounting points allow for quick reconfiguration. This approach enabled rapid iteration during prototyping and testing phases.
 
-## Technologies Used
+## Electronics & Control
 
-- CAD Design Software
-- Mechanical Engineering Principles
-- Robotic Kinematics
-- Precision Manufacturing
+The custom PCB serves as the central nervous system of the robot arm, handling motor control, power distribution, and communication. The board integrates motor drivers, power management circuitry, and a wireless communication module.
+
+- Custom PCB for motor control and power distribution
+- Wireless communication for real-time control
+- Modular electronics architecture for future expansion
+
+## Software / UI
+
+The web-based control interface provides real-time control of all four joints through an intuitive interface. Users can adjust joint positions individually or use preset configurations. The interface communicates wirelessly with the robot arm, enabling control from any device with a web browser.
+
+## Results & Status
+
+Successfully assembled and tested joint motion for all four degrees of freedom. Demonstrated wireless control of individual joints with real-time feedback. Ongoing iteration on load capacity and precision to improve performance for practical applications.
+
+## Lessons Learned
+
+- Belt tensioning proved more critical than initially anticipated—proper tension is essential for accurate positioning
+- Modular design paid off during troubleshooting, allowing quick isolation of issues to specific joints
+- Power distribution became a bottleneck at higher loads—future iterations will need more robust power management
+- Wireless communication latency was acceptable for manual control but may need optimization for autonomous operation
+- CAD modeling accuracy was crucial—small tolerances in the model translated to real-world assembly challenges

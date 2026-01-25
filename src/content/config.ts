@@ -9,6 +9,7 @@ const projects = defineCollection({
     image2: z.string().optional(),
     image3: z.string().optional(),
     image4: z.string().optional(),
+    carouselImages: z.array(z.string()).optional(), // Array of images for carousel
     description: z.string().optional(),
     tags: z.array(z.string()).optional(),
     publishedDate: z.string().optional(),
@@ -19,6 +20,7 @@ const projects = defineCollection({
     sectionContent: z.string().optional(),
     sectionTitle2: z.string().optional(),
     sectionContent2: z.string().optional(),
+    order: z.number().optional(), // Custom order field for manual sorting
   }),
 });
 
