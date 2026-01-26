@@ -19,6 +19,8 @@ const isHomePage = currentPath === '/';
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
     <ClientRouter />
     <title>{title}</title>
     <script is:inline>
@@ -339,6 +341,106 @@ const isHomePage = currentPath === '/';
           } catch (e) {
             // Ignore errors
           }
+        });
+      })();
+    </script>
+
+    <!-- Image Lightbox Modal -->
+    <div id="image-lightbox" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-90 dark:bg-opacity-95" style="display: none;">
+      <div class="relative max-w-7xl max-h-[90vh] w-full h-full flex items-center justify-center p-4">
+        <button 
+          id="lightbox-close" 
+          class="absolute top-4 right-4 text-white hover:text-gray-300 text-4xl font-bold z-10 bg-black bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center transition-all hover:bg-opacity-70"
+          aria-label="Close lightbox"
+        >
+          ×
+        </button>
+        <img 
+          id="lightbox-image" 
+          src="" 
+          alt="" 
+          class="max-w-full max-h-full object-contain rounded-lg"
+        />
+      </div>
+    </div>
+
+    <style>
+      #image-lightbox {
+        backdrop-filter: blur(4px);
+      }
+      
+      #image-lightbox.show {
+        display: flex !important;
+      }
+      
+      .image-lightbox {
+        cursor: zoom-in;
+      }
+    </style>
+
+    <script>
+      (function() {
+        // Initialize lightbox functionality
+        const initLightbox = () => {
+          const lightbox = document.getElementById('image-lightbox');
+          const lightboxImage = document.getElementById('lightbox-image');
+          const lightboxClose = document.getElementById('lightbox-close');
+          const images = document.querySelectorAll('.image-lightbox');
+
+          if (!lightbox || !lightboxImage || !lightboxClose) return;
+
+          // Open lightbox
+          const openLightbox = (src, alt) => {
+            lightboxImage.src = src;
+            lightboxImage.alt = alt || '';
+            lightbox.classList.add('show');
+            document.body.style.overflow = 'hidden';
+          };
+
+          // Close lightbox
+          const closeLightbox = () => {
+            lightbox.classList.remove('show');
+            document.body.style.overflow = '';
+          };
+
+          // Add click handlers to all images
+          images.forEach(img => {
+            img.addEventListener('click', (e) => {
+              e.preventDefault();
+              const src = img.getAttribute('data-lightbox-src') || img.src;
+              const alt = img.getAttribute('data-lightbox-alt') || img.alt || '';
+              openLightbox(src, alt);
+            });
+          });
+
+          // Close on button click
+          lightboxClose.addEventListener('click', closeLightbox);
+
+          // Close on background click
+          lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+              closeLightbox();
+            }
+          });
+
+          // Close on Escape key
+          document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('show')) {
+              closeLightbox();
+            }
+          });
+        };
+
+        // Initialize on page load
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initLightbox);
+        } else {
+          initLightbox();
+        }
+
+        // Re-initialize on Astro page transitions
+        document.addEventListener('astro:page-load', () => {
+          setTimeout(initLightbox, 50);
         });
       })();
     </script>

@@ -13,7 +13,9 @@ const scalePercent = scale / 100;
   <img 
     src={src} 
     alt={alt}
-    class="rounded-xl"
+    class="rounded-xl cursor-pointer hover:opacity-90 transition-opacity image-lightbox"
+    data-lightbox-src={src}
+    data-lightbox-alt={alt}
     style={`width: ${scalePercent * 100}%; max-width: 100%; height: auto;`}
   />
 </div>

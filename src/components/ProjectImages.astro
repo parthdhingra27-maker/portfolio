@@ -1,0 +1,45 @@
+---
+interface Props {
+  leftSrc: string;
+  leftAlt?: string;
+  leftScale?: number;
+  rightSrc: string;
+  rightAlt?: string;
+  rightScale?: number;
+}
+
+const { 
+  leftSrc, 
+  leftAlt = "", 
+  leftScale = 100,
+  rightSrc,
+  rightAlt = "",
+  rightScale = 100
+} = Astro.props;
+
+const leftScalePercent = leftScale / 100;
+const rightScalePercent = rightScale / 100;
+---
+
+<div class="project-images-wrapper my-8 flex flex-wrap gap-4 items-start">
+  <div class="flex-1 min-w-[250px]">
+    <img 
+      src={leftSrc} 
+      alt={leftAlt}
+      class="rounded-xl w-full cursor-pointer hover:opacity-90 transition-opacity image-lightbox"
+      data-lightbox-src={leftSrc}
+      data-lightbox-alt={leftAlt}
+      style={`max-width: ${leftScalePercent * 100}%; height: auto;`}
+    />
+  </div>
+  <div class="flex-1 min-w-[250px]">
+    <img 
+      src={rightSrc} 
+      alt={rightAlt}
+      class="rounded-xl w-full cursor-pointer hover:opacity-90 transition-opacity image-lightbox"
+      data-lightbox-src={rightSrc}
+      data-lightbox-alt={rightAlt}
+      style={`max-width: ${rightScalePercent * 100}%; height: auto;`}
+    />
+  </div>
+</div>

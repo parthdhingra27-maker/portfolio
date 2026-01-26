@@ -2,6 +2,7 @@
 import Base from "../../layouts/Base.astro";
 import { getCollection } from "astro:content";
 import ProjectImage from "../../components/ProjectImage.astro";
+import ProjectImages from "../../components/ProjectImages.astro";
 
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
@@ -12,11 +13,7 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
-const { Content } = await project.render({
-  components: {
-    ProjectImage,
-  },
-});
+const { Content } = await project.render();
 
 const publishedDate = project.data.publishedDate 
   ? new Date(project.data.publishedDate).toLocaleDateString('en-US', { 
@@ -105,7 +102,9 @@ const publishedDate = project.data.publishedDate
         <img 
           src={project.data.coverImage || project.data.image} 
           alt={project.data.title}
-          class="rounded-xl object-cover"
+          class="rounded-xl object-cover cursor-pointer hover:opacity-90 transition-opacity image-lightbox"
+          data-lightbox-src={project.data.coverImage || project.data.image}
+          data-lightbox-alt={project.data.title}
           style={`width: ${(project.data.coverImageScale || 100) / 100 * 100}%; max-width: 100%; height: auto;`}
         />
       </div>
@@ -168,7 +167,7 @@ const publishedDate = project.data.publishedDate
 
     <!-- Project Content (Markdown) -->
     <div class="project-content max-w-none">
-      <Content />
+      <Content components={{ ProjectImage, ProjectImages }} />
     </div>
 
     <!-- Additional Images -->

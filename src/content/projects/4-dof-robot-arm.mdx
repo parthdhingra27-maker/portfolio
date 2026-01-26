@@ -1,0 +1,42 @@
+---
+title: "4-DOF Robot Arm"
+year: 2024
+description: "Designed and built a 4-DOF robotic arm featuring custom motor-control PCBs, belt-driven joints, and a wireless web-based control interface."
+tags: ["Robotics", "CAD", "Mechanical Design"]
+publishedDate: "2024-12-15"
+image: "/4dof-robot-arm.png"
+coverImage: "/robot-arm-workspace.png"
+coverImageScale: 60
+github: "https://github.com/parthdhingra27-maker/RobotArm"
+demoVideo: "https://youtube.com/shorts/5vbvHmszKk0?feature=share"
+sectionTitle: "Overview"
+sectionContent: "This project is a 4-DOF robotic arm I designed to learn custom PCB design, closed-loop motor control,  and mechanical robotics design. It includes a custom PCB with motor drivers, a custom wireless web GUI control software, and closed-loop encoder feedback."
+---
+
+## Key Features
+
+- 4 degrees of freedom with belt-driven joints
+- Custom-designed motor control PCB
+- Wireless web-based control interface
+- Magnetic absolute encoders on each joint
+
+
+## Electronics & Control
+
+<ProjectImage src="/pcb1.png" scale={80} alt="Image description" />
+<ProjectImage src="/pcb3.png" scale={60} alt="Image description" />
+
+
+This custom PCB uses a **ESP 32 microcontroller** as it's brain. It also uses **TMC2209 stepper drivers** to drive the **NEMA 17 motors** and a **TB6600 stepper driver** to drive the **NEMA 23 motor**. It includes an I2C multiplexer to allow for multiple encoders to be connected. It also includes a PolyFuse, capacitors to reduce noise, and a buck convertor to convert from 24v to 5v for the low power items. The PCB runs off 24v DC input.
+
+## Software / UI
+
+<ProjectImage src="/robotarmsoftware.jpg" scale={100} alt="Image description" />
+
+View at: [Robot Arm Control Software](https://robotarmcontrol.netlify.app/)
+
+The web-based UI communicates via **Web Sockets** to the ESP 32. This allows for real time control of each individual joint with **encoder feedback**. As each joint moves, encoder values are displayed on the UI. The robot also has **step correction** so it uses encoder data to make sure it's at the target value.
+
+## Results & Status
+
+I successfully assembled and tested joint motion for all four degrees of freedom. I demonstrated wireless control of individual joints with real-time feedback. I'm designing a V2 that uses custom **cylcoidal gearboxes** instead of gears and pulleys to include modularity and torque. 
