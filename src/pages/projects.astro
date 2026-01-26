@@ -102,7 +102,7 @@ const allTags = Array.from(
         return (
           <a 
             href={`/projects/${project.slug}`}
-            class="block bg-white rounded-xl border border-[#F3F4F6] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 ease-in-out transform hover:scale-[1.02] cursor-pointer group"
+            class="block bg-white rounded-xl border border-[#F3F4F6] overflow-hidden shadow-sm hover:shadow-xl hover:border-[#654321]/30 transition-all duration-300 ease-in-out transform hover:scale-[1.02] hover:-translate-y-1 cursor-pointer group project-card"
           >
             {project.data.image ? (
               <img 
@@ -133,9 +133,9 @@ const allTags = Array.from(
               )}
               
               {project.data.tags && project.data.tags.length > 0 && (
-                <div class="flex flex-wrap gap-2 mb-4">
+                <div class="flex flex-wrap gap-2 mb-4 project-tags">
                   {project.data.tags.map((tag) => (
-                    <span class="px-3 py-1 bg-[#A67C52] text-white text-xs rounded-full project-tag" data-tag={tag.toLowerCase()}>
+                    <span class="px-3 py-1 bg-[#A67C52] text-white text-xs rounded-full group-hover:bg-[#654321] transition-colors duration-300 project-tag" data-tag={tag.toLowerCase()}>
                       {tag}
                     </span>
                   ))}
@@ -237,4 +237,36 @@ const allTags = Array.from(
       });
     }
   </script>
+
+  <style>
+    /* Enhanced Project Card Hover Effects */
+    .project-card {
+      position: relative;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 0.75rem;
+      padding: 2px;
+      background: linear-gradient(135deg, #654321, #A67C52);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .project-card:hover::before {
+      opacity: 1;
+    }
+
+    .project-card:hover {
+      z-index: 1;
+    }
+  </style>
 </Base>

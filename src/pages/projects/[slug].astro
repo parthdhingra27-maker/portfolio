@@ -205,12 +205,9 @@ const publishedDate = project.data.publishedDate
       font-size: 1.125rem;
     }
 
-    /* Target ALL h2 headings in article - catch everything */
-    article h2,
-    article .project-content h2,
-    .project-content h2,
-    article * h2 {
-      font-size: 2.5rem !important;
+    /* Use :global() to target rendered markdown content */
+    .project-content :global(h2) {
+      font-size: 2rem !important;
       font-weight: 900 !important;
       margin-top: 4rem !important;
       margin-bottom: 2rem !important;
@@ -220,19 +217,13 @@ const publishedDate = project.data.publishedDate
       font-family: 'Inter', system-ui, sans-serif !important;
     }
 
-    /* First h2 in the markdown content section (the one after Overview) */
-    article .project-content:last-of-type h2:first-of-type,
-    article .project-content:last-of-type > *:first-child h2:first-of-type {
+    /* First h2 in markdown content */
+    .project-content :global(h2:first-of-type) {
       margin-top: 2.5rem !important;
     }
 
     /* Target ALL h3 headings */
-    article h3,
-    article .project-content h3,
-    .project-content h3,
-    article .project-content :is(h3),
-    .project-content :is(h3),
-    article :is(h3) {
+    .project-content :global(h3) {
       font-size: 1.75rem !important;
       font-weight: 800 !important;
       margin-top: 3rem !important;
@@ -242,30 +233,26 @@ const publishedDate = project.data.publishedDate
       letter-spacing: -0.01em !important;
     }
 
-    .project-content p,
-    article .project-content p {
+    .project-content :global(p) {
       font-size: 1.125rem !important;
       margin-bottom: 2.5rem !important;
       line-height: 1.75 !important;
       color: #1A1A1A !important;
     }
 
-    .project-content strong {
-      font-weight: 700;
-      color: #1A1A1A;
+    .project-content :global(strong) {
+      font-weight: 700 !important;
+      color: #1A1A1A !important;
     }
 
-    .project-content ul,
-    .project-content ol,
-    article .project-content ul,
-    article .project-content ol {
+    .project-content :global(ul),
+    .project-content :global(ol) {
       margin-bottom: 3rem !important;
       margin-top: 1.5rem !important;
       padding-left: 1.75rem !important;
     }
 
-    .project-content li,
-    article .project-content li {
+    .project-content :global(li) {
       margin-bottom: 0.875rem !important;
       line-height: 1.75 !important;
       font-size: 1.125rem !important;
@@ -273,49 +260,49 @@ const publishedDate = project.data.publishedDate
       display: list-item !important;
     }
 
-    .project-content a {
-      color: #654321;
-      text-decoration: underline;
-      transition: opacity 0.2s;
+    .project-content :global(a) {
+      color: #654321 !important;
+      text-decoration: underline !important;
+      transition: opacity 0.2s !important;
     }
 
-    .project-content a:hover {
-      opacity: 0.8;
+    .project-content :global(a:hover) {
+      opacity: 0.8 !important;
     }
 
-    .project-content code {
-      background: #F3F4F6;
-      padding: 0.2em 0.4em;
-      border-radius: 4px;
-      font-size: 0.9em;
-      font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Consolas', monospace;
+    .project-content :global(code) {
+      background: #F3F4F6 !important;
+      padding: 0.2em 0.4em !important;
+      border-radius: 4px !important;
+      font-size: 0.9em !important;
+      font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Consolas', monospace !important;
     }
 
-    .project-content pre {
-      background: #F3F4F6;
-      padding: 1.25rem;
-      border-radius: 8px;
-      overflow-x: auto;
-      margin-bottom: 1.5rem;
+    .project-content :global(pre) {
+      background: #F3F4F6 !important;
+      padding: 1.25rem !important;
+      border-radius: 8px !important;
+      overflow-x: auto !important;
+      margin-bottom: 1.5rem !important;
     }
 
-    .project-content pre code {
-      background: none;
-      padding: 0;
+    .project-content :global(pre code) {
+      background: none !important;
+      padding: 0 !important;
     }
 
-    .project-content blockquote {
-      border-left: 3px solid #D97706;
-      padding-left: 1.25rem;
-      margin-left: 0;
-      margin-bottom: 1.5rem;
-      color: #4B5563;
-      font-style: italic;
+    .project-content :global(blockquote) {
+      border-left: 3px solid #D97706 !important;
+      padding-left: 1.25rem !important;
+      margin-left: 0 !important;
+      margin-bottom: 1.5rem !important;
+      color: #4B5563 !important;
+      font-style: italic !important;
     }
 
-    .project-content img {
-      border-radius: 8px;
-      margin-bottom: 1.5rem;
+    .project-content :global(img) {
+      border-radius: 8px !important;
+      margin-bottom: 1.5rem !important;
     }
   </style>
 

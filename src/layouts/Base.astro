@@ -73,12 +73,97 @@ const isHomePage = currentPath === '/';
           transition: opacity 0.3s ease-in-out;
         }
       }
+
+      /* Animated Background Pattern */
+      .subtle-bg {
+        background-color: #FAFAFA;
+        position: relative;
+      }
+
+      .subtle-bg::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 100vh;
+        background-image: 
+          linear-gradient(rgba(101, 67, 33, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(101, 67, 33, 0.03) 1px, transparent 1px);
+        background-size: 50px 50px;
+        animation: gridMove 20s linear infinite;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .subtle-bg::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 100vh;
+        background: radial-gradient(circle, rgba(101, 67, 33, 0.04) 1px, transparent 1px);
+        background-size: 80px 80px;
+        animation: dotMove 30s linear infinite;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      main {
+        position: relative;
+        z-index: 1;
+      }
+
+      nav, footer {
+        position: relative;
+        z-index: 1;
+        background-color: #FAFAFA;
+      }
+
+      @keyframes gridMove {
+        0% {
+          transform: translate(0, 0);
+        }
+        100% {
+          transform: translate(50px, 50px);
+        }
+      }
+
+      @keyframes dotMove {
+        0% {
+          transform: translate(0, 0) rotate(0deg);
+        }
+        100% {
+          transform: translate(40px, 40px) rotate(360deg);
+        }
+      }
+
+      /* Personal Logo Mark */
+      .logo-mark {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(135deg, #654321, #A67C52);
+        color: white;
+        font-size: 0.875rem;
+        font-weight: 700;
+        border-radius: 6px;
+        letter-spacing: -0.5px;
+      }
     </style>
   </head>
-  <body class="bg-[#FAFAFA] font-sans antialiased scroll-smooth">
+  <body class="bg-[#FAFAFA] font-sans antialiased scroll-smooth subtle-bg">
     <nav class="flex justify-between items-center px-4 sm:px-6 py-4 sm:py-5 w-full relative border-b border-gray-200">
-      <a href="/" class="text-xl sm:text-2xl font-bold text-[#654321] hover:opacity-70 transition-all duration-300 ease-in-out">
-        Parth Dhingra
+      <a href="/" class="text-xl sm:text-2xl font-bold text-[#654321] hover:opacity-70 transition-all duration-300 ease-in-out flex items-center gap-2">
+        <span class="logo-mark">PD</span>
+        <span>Parth Dhingra</span>
       </a>
       <div class="hidden md:flex gap-10 absolute left-1/2 transform -translate-x-1/2">
         {!isHomePage && (
