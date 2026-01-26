@@ -10,10 +10,42 @@ coverImage: "/solder-fume-extractor.png"
 github: "https://github.com/parthdhingra27-maker/FumeExtractor"
 demoVideo: "https://youtu.be/WtM6y2z5Hec"
 sectionTitle: "Overview"
-sectionContent: "This is a simple fume extractor I designed to filter out fumes during the soldering process. It uses a custom PCB, an Arduino microcontroller, and a PC fan"
+sectionContent: "This is a simple fume extractor I designed to filter out fumes during the soldering process. It uses a custom PCB, an Arduino microcontroller, a PC fan, and an activated charcoal filter all enclosed in a 3d printed assembly. It also has a toggle on/off switch, a speed control knob, and a screen that shows the fan speed."
 sectionTitle2: "PCB"
 sectionContent2: "The PCB"
 
 ---
 
+## Key Features
 
+- **Custom PCB** for motor control and power distribution
+- Variable fan speed control
+- Fully 3D-printed enclosure
+
+## Mechanical Design
+
+<ProjectImages 
+  leftSrc="/fumecad1.png" 
+  leftAlt="PCB Schematics" 
+  leftScale={100}
+  rightSrc="/fumecad2.png" 
+  rightAlt="PCB Board" 
+  rightScale={100}
+/>
+
+I designed the fume extractor in **Onshape**. It uses 3D printed parts that are attatched together using heat set inserts. The filter is removable and the bottom cover is also removable and houses the electronics.
+
+## Electronics & Control
+
+<ProjectImage src="/fumepcb1.jpg" scale={90} alt="Fume Extractor PCB Schematics" />
+<ProjectImage src="/fumepcb2.png" scale={60} alt="Fume Extractor PCB" />
+
+The PCB was designed in **EasyEDA**. It takes a 12v DC input which supplies the PC fan and then a buck convertor converts the 12v to 5v for the rest of the electronics.
+
+It uses an Arduino Nano as a microcontroller that allows for fan speed control and a display screen that displays the fan speed.
+
+## Results
+
+<ProjectImage src="/fumegif.gif" scale={30} alt="Fume Extractor PCB" />
+
+The fume extractor effectively captured solder fumes and worked reliably. The speed control was also worked and allowed the fan speed to be turned up or down.
