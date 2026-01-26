@@ -6,6 +6,7 @@ tags: ["Business", "3D Printing", "Manufacturing"]
 publishedDate: "2023-08-15"
 readTime: "5 min read"
 image: "/3d-printing-business.png"
+coverImage: "/3d-printing-business.png"
 github: ""
 demoVideo: ""
 sectionTitle: "Overview"

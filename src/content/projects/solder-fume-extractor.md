@@ -6,6 +6,7 @@ tags: ["Electronics", "3D Printing", "Hardware"]
 publishedDate: "2024-11-20"
 readTime: "4 min read"
 image: "/solder-fume-extractor.png"
+coverImage: "/solder-fume-extractor.png"
 github: "https://github.com/parthdhingra27-maker/FumeExtractor"
 demoVideo: "https://youtu.be/WtM6y2z5Hec"
 sectionTitle: "Overview"

@@ -1,6 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
 import { getCollection } from "astro:content";
+import ProjectImage from "../../components/ProjectImage.astro";
 
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
@@ -11,7 +12,11 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
-const { Content } = await project.render();
+const { Content } = await project.render({
+  components: {
+    ProjectImage,
+  },
+});
 
 const publishedDate = project.data.publishedDate 
   ? new Date(project.data.publishedDate).toLocaleDateString('en-US', { 
@@ -23,11 +28,57 @@ const publishedDate = project.data.publishedDate
 ---
 
 <Base title={`${project.data.title} - Parth Dhingra`}>
-  <article class="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+  <style is:global>
+    /* Force ALL text in article to be visible in dark mode - most comprehensive */
+    html.dark article,
+    html.dark article p,
+    html.dark article span,
+    html.dark article div,
+    html.dark article li,
+    html.dark article td,
+    html.dark article th,
+    html.dark article em,
+    html.dark article i,
+    html.dark article strong,
+    html.dark article b,
+    html.dark article small,
+    html.dark article mark,
+    html.dark article del,
+    html.dark article ins,
+    html.dark article sub,
+    html.dark article sup,
+    html.dark article *:not(button):not(.bg-\[#D97706\]):not(.bg-\[#A67C52\]):not(.bg-\[#1A1A1A\]):not(.bg-\[#FF0000\]):not(.bg-\[#654321\]):not(svg):not(path):not(img) {
+      color: #F3F4F6 !important;
+    }
+    
+    html.dark article h1,
+    html.dark article h2,
+    html.dark article h3,
+    html.dark article h4,
+    html.dark article h5,
+    html.dark article h6 {
+      color: #F9FAFB !important;
+    }
+    
+    html.dark article a:not(.bg-\[#1A1A1A\]):not(.bg-\[#FF0000\]) {
+      color: #A67C52 !important;
+    }
+    
+    /* Ensure buttons keep their white text */
+    html.dark article button,
+    html.dark article .bg-\[#D97706\],
+    html.dark article .bg-\[#A67C52\],
+    html.dark article .bg-\[#1A1A1A\],
+    html.dark article .bg-\[#FF0000\],
+    html.dark article .bg-\[#654321\] {
+      color: white !important;
+    }
+  </style>
+  <article class="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12 text-[#1A1A1A] dark:text-gray-100">
     <!-- Back Link -->
     <a 
       href="/projects" 
-      class="inline-flex items-center gap-2 text-[#4B5563] hover:text-[#1A1A1A] transition-colors mb-8 text-sm sm:text-base"
+      class="inline-flex items-center gap-2 text-[#4B5563] dark:text-gray-200 hover:text-[#1A1A1A] dark:hover:text-gray-100 transition-colors mb-8 text-sm sm:text-base"
     >
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <line x1="19" y1="12" x2="5" y2="12"/>
@@ -37,81 +88,34 @@ const publishedDate = project.data.publishedDate
     </a>
 
     <!-- Project Title -->
-    <h1 class="text-4xl sm:text-5xl font-bold mb-4 text-[#1A1A1A]">
+    <h1 class="text-4xl sm:text-5xl font-bold mb-4 text-[#1A1A1A] dark:text-gray-100">
       {project.data.title}
     </h1>
 
     <!-- Metadata -->
     {publishedDate && (
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-8 text-sm sm:text-base text-[#4B5563]">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-8 text-sm sm:text-base text-[#4B5563] dark:text-gray-200">
         <span>Published on: {publishedDate}</span>
       </div>
     )}
 
-    <!-- Project Image Carousel -->
-    {project.data.carouselImages && project.data.carouselImages.length > 0 ? (
-      <div class="mb-8 relative">
-        <div class="carousel-container relative w-full rounded-xl overflow-hidden bg-gray-100">
-          {project.data.carouselImages.map((img, index) => (
-            <div 
-              class={`carousel-slide ${index === 0 ? 'active' : 'hidden'}`}
-              data-slide={index}
-            >
-              <img 
-                src={img} 
-                alt={`${project.data.title} - Image ${index + 1}`}
-                class="w-full h-auto rounded-xl object-cover"
-              />
-            </div>
-          ))}
-          
-          {project.data.carouselImages.length > 1 && (
-            <>
-              <button 
-                class="carousel-prev absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-lg transition-all duration-300 z-10"
-                aria-label="Previous image"
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="15 18 9 12 15 6"/>
-                </svg>
-              </button>
-              <button 
-                class="carousel-next absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-lg transition-all duration-300 z-10"
-                aria-label="Next image"
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="9 18 15 12 9 6"/>
-                </svg>
-              </button>
-              
-              <div class="carousel-dots absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-                {project.data.carouselImages.map((_, index) => (
-                  <button 
-                    class={`carousel-dot w-2 h-2 rounded-full transition-all duration-300 ${index === 0 ? 'bg-white' : 'bg-white/50'}`}
-                    data-dot={index}
-                    aria-label={`Go to image ${index + 1}`}
-                  ></button>
-                ))}
-              </div>
-            </>
-          )}
-        </div>
-      </div>
-    ) : project.data.image ? (
-      <div class="mb-8">
+    <!-- Project Cover Image -->
+    {(project.data.coverImage || project.data.image) && (
+      <div class="mb-8 flex justify-center">
         <img 
-          src={project.data.image} 
+          src={project.data.coverImage || project.data.image} 
           alt={project.data.title}
-          class="w-full rounded-xl object-cover"
+          class="rounded-xl object-cover"
+          style={`width: ${(project.data.coverImageScale || 100) / 100 * 100}%; max-width: 100%; height: auto;`}
         />
       </div>
-    ) : null}
+    )}
 
     <!-- Tags -->
     {project.data.tags && project.data.tags.length > 0 && (
       <div class="flex flex-wrap gap-2 mb-6">
         {project.data.tags.map((tag) => (
-          <span class="px-4 py-1.5 bg-[#D97706] text-white text-sm rounded-full font-medium">
+          <span class="px-4 py-1.5 bg-[#D97706] dark:bg-[#A67C52] text-white text-sm rounded-full font-medium">
             {tag}
           </span>
         ))}
@@ -126,7 +130,7 @@ const publishedDate = project.data.publishedDate
             href={project.data.github}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 bg-[#1A1A1A] text-white px-4 py-2 rounded-xl hover:opacity-90 transition-all duration-300 ease-in-out transform hover:scale-105 text-sm"
+            class="inline-flex items-center gap-2 bg-[#1A1A1A] dark:bg-gray-700 text-white px-4 py-2 rounded-xl hover:opacity-90 transition-all duration-300 ease-in-out transform hover:scale-105 text-sm"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
@@ -152,11 +156,11 @@ const publishedDate = project.data.publishedDate
 
     <!-- Overview Section -->
     {project.data.sectionTitle && project.data.sectionContent && (
-      <div class="project-content">
-        <h2 style="font-size: 2.5rem; font-weight: 900; margin-top: 2.5rem; margin-bottom: 2rem; line-height: 1.2; letter-spacing: -0.025em; color: #1A1A1A; font-family: 'Inter', system-ui, sans-serif;">
+      <div class="project-content overview-section">
+        <h2 class="overview-title" style="font-size: 2.5rem; font-weight: 900; margin-top: 2.5rem; margin-bottom: 2rem; line-height: 1.2; letter-spacing: -0.025em; font-family: 'Inter', system-ui, sans-serif;">
           {project.data.sectionTitle}
         </h2>
-        <p style="font-size: 1.125rem; margin-bottom: 2.5rem; line-height: 1.75; color: #1A1A1A;">
+        <p class="overview-content" style="font-size: 1.125rem; margin-bottom: 2.5rem; line-height: 1.75;">
           {project.data.sectionContent}
         </p>
       </div>
@@ -205,13 +209,75 @@ const publishedDate = project.data.publishedDate
       font-size: 1.125rem;
     }
 
+    /* Force dark mode text to be visible - highest priority */
+    html.dark .project-content,
+    html.dark .project-content *:not(button):not(.bg-\[#D97706\]):not(.bg-\[#A67C52\]):not(.bg-\[#1A1A1A\]):not(.bg-\[#FF0000\]):not(svg):not(path) {
+      color: #F3F4F6 !important;
+    }
+    
+    html.dark article,
+    html.dark article *:not(button):not(.bg-\[#D97706\]):not(.bg-\[#A67C52\]):not(.bg-\[#1A1A1A\]):not(.bg-\[#FF0000\]):not(svg):not(path):not(img) {
+      color: #F3F4F6 !important;
+    }
+    
+    /* Catch any text nodes that might be direct children */
+    html.dark article > *,
+    html.dark .project-content > * {
+      color: #F3F4F6 !important;
+    }
+
+    /* Ensure all text elements in dark mode inherit light color */
+    html.dark .project-content :global(span),
+    html.dark .project-content :global(div),
+    html.dark .project-content :global(em),
+    html.dark .project-content :global(i),
+    html.dark .project-content :global(table),
+    html.dark .project-content :global(td),
+    html.dark .project-content :global(th),
+    html.dark .project-content :global(section),
+    html.dark .project-content :global(article),
+    html.dark .project-content :global(main),
+    html.dark .project-content :global(header),
+    html.dark .project-content :global(footer),
+    html.dark .project-content :global(nav),
+    html.dark .project-content :global(aside),
+    html.dark article span,
+    html.dark article div:not([class*="bg-"]):not(button),
+    html.dark article section,
+    html.dark article article {
+      color: #F3F4F6 !important;
+    }
+
     /* Use :global() to target rendered markdown content */
+    .project-content :global(h1),
+    .project-content :global(h2),
+    .project-content :global(h3),
+    .project-content :global(h4),
+    .project-content :global(h5),
+    .project-content :global(h6) {
+      color: #1A1A1A !important;
+    }
+
+    html.dark .project-content :global(h1),
+    html.dark .project-content :global(h2),
+    html.dark .project-content :global(h3),
+    html.dark .project-content :global(h4),
+    html.dark .project-content :global(h5),
+    html.dark .project-content :global(h6),
+    html.dark article h1,
+    html.dark article h2,
+    html.dark article h3,
+    html.dark article h4,
+    html.dark article h5,
+    html.dark article h6 {
+      color: #F9FAFB !important;
+    }
+
     .project-content :global(h2) {
       font-size: 2rem !important;
       font-weight: 900 !important;
       margin-top: 4rem !important;
       margin-bottom: 2rem !important;
-      color: #1A1A1A !important;
       line-height: 1.2 !important;
       letter-spacing: -0.025em !important;
       font-family: 'Inter', system-ui, sans-serif !important;
@@ -228,7 +294,6 @@ const publishedDate = project.data.publishedDate
       font-weight: 800 !important;
       margin-top: 3rem !important;
       margin-bottom: 1rem !important;
-      color: #1A1A1A !important;
       line-height: 1.3 !important;
       letter-spacing: -0.01em !important;
     }
@@ -240,9 +305,17 @@ const publishedDate = project.data.publishedDate
       color: #1A1A1A !important;
     }
 
+    html.dark .project-content :global(p) {
+      color: #F3F4F6 !important;
+    }
+
     .project-content :global(strong) {
       font-weight: 700 !important;
       color: #1A1A1A !important;
+    }
+
+    html.dark .project-content :global(strong) {
+      color: #F9FAFB !important;
     }
 
     .project-content :global(ul),
@@ -250,6 +323,14 @@ const publishedDate = project.data.publishedDate
       margin-bottom: 3rem !important;
       margin-top: 1.5rem !important;
       padding-left: 1.75rem !important;
+      color: #1A1A1A !important;
+    }
+    
+    html.dark .project-content :global(ul),
+    html.dark .project-content :global(ol),
+    html.dark article ul,
+    html.dark article ol {
+      color: #F3F4F6 !important;
     }
 
     .project-content :global(li) {
@@ -258,12 +339,24 @@ const publishedDate = project.data.publishedDate
       font-size: 1.125rem !important;
       list-style-type: disc !important;
       display: list-item !important;
+      color: #1A1A1A !important;
+    }
+
+    html.dark .project-content :global(li),
+    html.dark article li,
+    html.dark article li *,
+    html.dark .project-content :global(li *) {
+      color: #F3F4F6 !important;
     }
 
     .project-content :global(a) {
       color: #654321 !important;
       text-decoration: underline !important;
       transition: opacity 0.2s !important;
+    }
+
+    html.dark .project-content :global(a) {
+      color: #A67C52 !important;
     }
 
     .project-content :global(a:hover) {
@@ -276,6 +369,13 @@ const publishedDate = project.data.publishedDate
       border-radius: 4px !important;
       font-size: 0.9em !important;
       font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Consolas', monospace !important;
+      color: #1A1A1A !important;
+    }
+
+    html.dark .project-content :global(code),
+    html.dark article code {
+      background: #374151 !important;
+      color: #F3F4F6 !important;
     }
 
     .project-content :global(pre) {
@@ -286,9 +386,19 @@ const publishedDate = project.data.publishedDate
       margin-bottom: 1.5rem !important;
     }
 
+    html.dark .project-content :global(pre),
+    html.dark article pre {
+      background: #374151 !important;
+    }
+
     .project-content :global(pre code) {
       background: none !important;
       padding: 0 !important;
+      color: #1A1A1A !important;
+    }
+
+    html.dark .project-content :global(pre code) {
+      color: #F3F4F6 !important;
     }
 
     .project-content :global(blockquote) {
@@ -300,49 +410,58 @@ const publishedDate = project.data.publishedDate
       font-style: italic !important;
     }
 
+    html.dark .project-content :global(blockquote),
+    html.dark article blockquote {
+      color: #F3F4F6 !important;
+    }
+
     .project-content :global(img) {
       border-radius: 8px !important;
       margin-bottom: 1.5rem !important;
     }
+
+    /* Overview Section specific styles */
+    .overview-section .overview-title {
+      color: #1A1A1A !important;
+    }
+
+    html.dark .overview-section .overview-title {
+      color: #F9FAFB !important;
+    }
+
+    .overview-section .overview-content {
+      color: #1A1A1A !important;
+    }
+
+    html.dark .overview-section .overview-content {
+      color: #F3F4F6 !important;
+    }
+
+    /* Links should be visible but different color */
+    html.dark article a,
+    html.dark article :global(a),
+    html.dark .project-content :global(a) {
+      color: #A67C52 !important;
+    }
+
+    /* FINAL CATCH-ALL: Force any remaining text to be visible */
+    html.dark article [class*="project-content"] *,
+    html.dark article [class*="project-content"] *::before,
+    html.dark article [class*="project-content"] *::after,
+    html.dark article > div > *,
+    html.dark article > div > * > * {
+      color: #F3F4F6 !important;
+    }
+    
+    /* But preserve headings */
+    html.dark article [class*="project-content"] h1,
+    html.dark article [class*="project-content"] h2,
+    html.dark article [class*="project-content"] h3,
+    html.dark article [class*="project-content"] h4,
+    html.dark article [class*="project-content"] h5,
+    html.dark article [class*="project-content"] h6 {
+      color: #F9FAFB !important;
+    }
   </style>
 
-  {project.data.carouselImages && project.data.carouselImages.length > 1 && (
-    <script is:inline>
-      (function() {
-        const slides = document.querySelectorAll('.carousel-slide');
-        const dots = document.querySelectorAll('.carousel-dot');
-        const prevBtn = document.querySelector('.carousel-prev');
-        const nextBtn = document.querySelector('.carousel-next');
-        let currentSlide = 0;
-
-        function showSlide(index) {
-          slides.forEach((slide, i) => {
-            slide.classList.toggle('hidden', i !== index);
-          });
-          dots.forEach((dot, i) => {
-            dot.classList.toggle('bg-white', i === index);
-            dot.classList.toggle('bg-white/50', i !== index);
-          });
-          currentSlide = index;
-        }
-
-        function nextSlide() {
-          const next = (currentSlide + 1) % slides.length;
-          showSlide(next);
-        }
-
-        function prevSlide() {
-          const prev = (currentSlide - 1 + slides.length) % slides.length;
-          showSlide(prev);
-        }
-
-        if (nextBtn) nextBtn.addEventListener('click', nextSlide);
-        if (prevBtn) prevBtn.addEventListener('click', prevSlide);
-        
-        dots.forEach((dot, index) => {
-          dot.addEventListener('click', () => showSlide(index));
-        });
-      })();
-    </script>
-  )}
 </Base>

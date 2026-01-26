@@ -6,6 +6,7 @@ tags: ["Robotics", "Leadership", "Mechanical Design"]
 publishedDate: "2024-05-10"
 readTime: "6 min read"
 image: "/frc-robotics.png"
+coverImage: "/frc-robotics.png"
 github: ""
 demoVideo: ""
 sectionTitle: "Overview"

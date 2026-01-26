@@ -5,7 +5,9 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string(),
     year: z.number(),
-    image: z.string().optional(),
+    image: z.string().optional(), // Image for project tiles (homepage/projects page)
+    coverImage: z.string().optional(), // Main cover image for project detail page
+    coverImageScale: z.number().optional(), // Scale percentage for cover image (default: 100)
     image2: z.string().optional(),
     image3: z.string().optional(),
     image4: z.string().optional(),

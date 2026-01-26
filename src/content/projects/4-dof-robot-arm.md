@@ -4,9 +4,9 @@ year: 2024
 description: "Designed and built a 4-DOF robotic arm featuring custom motor-control PCBs, belt-driven joints, and a wireless web-based control interface."
 tags: ["Robotics", "CAD", "Mechanical Design"]
 publishedDate: "2024-12-15"
-readTime: "5 min read"
 image: "/4dof-robot-arm.png"
-carouselImages: ["/4dof-robot-arm.png"]
+coverImage: "/robot-arm-workspace.png"
+coverImageScale: 60
 github: "https://github.com/parthdhingra27-maker/RobotArm"
 demoVideo: "https://youtube.com/shorts/5vbvHmszKk0?feature=share"
 sectionTitle: "Overview"
@@ -25,7 +25,7 @@ sectionContent: "This project is a custom-designed 4-DOF robotic arm developed t
 
 ## Mechanical Design
 
-The arm uses belt-driven joints to achieve precise motion control while maintaining a low-cost design. Each joint is modular, allowing for easy replacement and future expansion. The base joint provides 360-degree rotation, while the shoulder, elbow, and wrist joints offer the remaining degrees of freedom. Load considerations were critical in the design, with each joint sized to handle the cumulative weight of distal links while maintaining smooth operation.
+The arm uses belt-driven join   ts to achieve precise motion control while maintaining a low-cost design. Each joint is modular, allowing for easy replacement and future expansion. The base joint provides 360-degree rotation, while the shoulder, elbow, and wrist joints offer the remaining degrees of freedom. Load considerations were critical in the design, with each joint sized to handle the cumulative weight of distal links while maintaining smooth operation.
 
 The modular design philosophy extends to the link structure, where standardized mounting points allow for quick reconfiguration. This approach enabled rapid iteration during prototyping and testing phases.
 

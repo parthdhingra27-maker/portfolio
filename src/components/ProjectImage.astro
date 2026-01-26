@@ -1,0 +1,19 @@
+---
+interface Props {
+  src: string;
+  alt?: string;
+  scale?: number;
+}
+
+const { src, alt = "", scale = 100 } = Astro.props;
+const scalePercent = scale / 100;
+---
+
+<div class="project-image-wrapper my-8 flex justify-center">
+  <img 
+    src={src} 
+    alt={alt}
+    class="rounded-xl"
+    style={`width: ${scalePercent * 100}%; max-width: 100%; height: auto;`}
+  />
+</div>
