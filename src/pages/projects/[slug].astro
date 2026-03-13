@@ -6,10 +6,30 @@ import ProjectImages from "../../components/ProjectImages.astro";
 
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
-  return projects.map((project) => ({
-    params: { slug: project.slug },
-    props: { project },
-  }));
+  return projects.flatMap((project) => {
+    const paths = [
+      {
+        params: { slug: project.slug },
+        props: { project },
+      },
+    ];
+
+    if (project.slug === "solder-fume-extractor") {
+      paths.push({
+        params: { slug: "solder" },
+        props: { project },
+      });
+    }
+
+    if (project.slug === "4-dof-robot-arm") {
+      paths.push({
+        params: { slug: "arm" },
+        props: { project },
+      });
+    }
+
+    return paths;
+  });
 }
 
 const { project } = Astro.props;
